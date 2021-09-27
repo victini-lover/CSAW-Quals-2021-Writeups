@@ -1,26 +1,28 @@
 # RSA Pop Quiz
+Category: crypto
+Points: 390
+Solves: 137
 
-> Category: crypto
-> Suggested Points: 400
+## Description
+Your crypto professor is back again! After having taught you some things about RSA, they have sprung another pop quiz. According to them, it is harder and longer. You should still be able to crack it, right?
 
-# Description
-> Detailed description as it would need to be explained to other lab members
+## Notes
+I learned about these attacks by playing previous CTFs, reading the blog `bitsdeep.com` and reading papers discussing the various attacks possible on the RSA cyptosystem. 
 
-4 different RSA attacks have to be used to crack 5 different ciphertexts
+The goal of the challenge was to introduce people to the various attacks that are possible on RSA and get them interested in learning other attacks that were not done as a part of the challenge.
 
-# Deployment
-> Any special information about the deployment if there is a server component
+The RSA parameters for Parts 1,2 and 4 were pre-computed and saved to a json file to save on computation time during the CTF. The parameters vulnerable to Wiener's attack were generated using a script I wrote called `wiener_attack_generator.py`. The parameters where the primes generated are sexy primes were saved into a json file using a script I wrote called `sexy_primes_generator.py`. The parameters for the partial key leakage were generated using a script I wrote called `partial_key_generator.py`.
 
-Use the Dockerfile for the deployment
-
-# Flag
-
+## Flag
 flag{l00K5_L1K3_y0u_H4v3_p4223D_7h3_D1ff1Cul7_r54_p0p_Kw12_w17H_fLy1N9_C0L0r2}
 
-# Solution
-> As detailed as possible description of the solution. Not just the solver script. As full a description as possible of the solution for the challenge.
+## Solution
+For Part 1, 
 
-Part 1 --> Weiner's attack
-Part 2 --> The difference between the primes is 6. Therefore, the modulus can be factorized
-Part 3 --> LSB oracle. Send 2xplain, 4xplain, 8xplain, etc. to find the range in which the plaintext lies. For full details, please refer to https://bitsdeep.com/posts/attacking-rsa-for-fun-and-ctf-points-part-3/
-Part 4 --> Lower half of the private key is exposed. Therefore, the entire key can be determined from that
+For Part 2, 
+
+For Part 3, 
+
+For Part 4, 
+
+For the entire script implementation including server interaction, please check out `solution.sage`.

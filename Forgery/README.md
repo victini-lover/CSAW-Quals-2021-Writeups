@@ -1,24 +1,24 @@
 # Forgery
+Category: crypto
+Points: 405
+Solves: 127
 
-> Category: crypto
-> Points: 405
-> Solves: 127
+## Description
+Felicity and Cisco would like to hire you as an intern for a new security company that they are forming. They have given you a black box signature verification system to test out and see if you can forge a signature. Forge it and you will get a passphrase to be hired!
 
-# Description
-> Detailed description as it would need to be explained to other lab members
+## Notes
+This challenge was inspired by the Cyber Apocalypse 2021 CTF hosted by Hack The Box.
 
-This is a elgamal signature forgery challenge. The mistake made with the signing process is that the message is not hashed before being signed.
+The goal of this challenge was to have people learn about how improper implementation could easily break a signing system.
 
-# Deployment
-> Any special information about the deployment if there is a server component
-
-Use the Dockerfile for the deployment. Give forgery.py as a part of the challenge
-
-# Flag
-
+## Flag
 flag{7h3_4rr0wv3r53_15_4w350M3!}
 
-# Solution
-> As detailed as possible description of the solution. Not just the solver script. As full a description as possible of the solution for the challenge.
+## Solution
+This an ElGamal signature scheme. The issue is that the message needs to be hashed before it is signed using this system. Unfornuately, that was not done in this case. Also, another mistake made is that a `MASK` is applied to make the signature a certain size. But, the `MASK` is applied only after the checking the contents of the message. Therefore, you can place your message in the parts that will be masked out.
 
-Do a one-parameter existential forgery. Select an e such that 1 < e < p-1. Set r = (g^e * y) mod p and s = (-r) mod (p-1). Then the tuple (r,s) is a valid signature for the message m = (e*s) mod (p-1)
+Therefore, you can do a one-parameter existential forgery for the given public key and get past the checking system. Usually, in one-parameter existential forgery, the message is pre-determined based on your calculations needed (see `https://en.wikipedia.org/wiki/ElGamal_signature_scheme#Existential_forgery` for the calculations). But, becuase of the `MASK`, it is easier to fool the system.
+
+After submitting a forged signature, they would get the flag from the server.
+
+For the script implementation, please check out `solution.py`.

@@ -1,23 +1,26 @@
 # Gotta Decrypt Them All
+Category: crypto
+Points: 175
+Solves: 235
 
-> Category: crypto
-> Suggested Points: 200 or 300
+## Description
+You are stuck in another dimension while you were riding Solgaleo. You have Rotom-dex with you to contact your friends but he won't activate the GPS unless you can prove yourself to him. He is going to give you a series of phrases that only you should be able to decrypt and you have a limited amount of time to do so. Can you decrypt them all?
 
-# Description
-> Detailed description as it would need to be explained to other lab members
+## Notes
+The goal of the challenge was to get people used to performing simple decoding and decryption methods used routinely in CTFs. The idea was to get newcomers a little used to how crypto works. To give it a twist, I chose to put a time limit of 10 seconds to ensure that people used a script to solve it rather than doing it manually.
 
-This challenge has random Pokemon names put through different encoding and encryption schemes that the challenger needs to go through to be able to get the names. After responding with these names, the flag is given.
-
-# Deployment
-> Any special information about the deployment if there is a server component
-
-Use the Dockerfile for the deployment
-
-# Flag
-
+## Flag
 flag{We're_ALrEadY_0N_0uR_waY_7HE_j0UrnEY_57aR75_70day!}
 
-# Solution
-> As detailed as possible description of the solution. Not just the solver script. As full a description as possible of the solution for the challenge.
+## Solution
+After connecting to the server, people are given morse code. Decoding it leads them to numbers which are the decimal ASCII representation of letters and numbers. 
 
-Each Pokemon name is put through the following sequence in order: ROT13 --> RSA with e=3 --> Base64 --> ASCII numbers --> morse code. Reverse the order (for RSA with e=3, just take cuberoot of ciphertext) and you get each Pokemon name
+Converting the decimal numbers to ASCII, they see that there are capital letters, lowercase letters, numbers and the equal to sign. This is base64 and they need to decode it. 
+
+After decoding the Base64 text, they will get text that is in the format of "N = some number, e = 3, c = some number". This is RSA encryption and the flaw that they had to realize was that the public exponent was super small and the ciphertext was short. This implies that the ciphertext can be recoved by just taking the cube root of the ciphertext.
+
+After taking the cube root and converting the number to bytes to ASCII, they are greeted some random text. As a hint, the theme was Pokemon and the first ciphertext was a fixed string "Pokemon Names". Becasue of that, people can recognize that the last stage of decryption needs them to apply a Caeser shift of 13.
+
+This needs to be done for 6 different ciphertexts and after decrypting them and sending it to the server, people would get the flag from the server.
+
+For the script implementation, please check out `solver.sage`. The reason that SageMath was used is because standard Python was having precision issues for taking the cube root.
