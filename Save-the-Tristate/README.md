@@ -1,7 +1,7 @@
 # Save-the-Tristate
-> Category: misc
-> Points: 474
-> Solves: 68
+Category: misc
+Points: 474
+Solves: 68
 
 ## Description
 So it was just another day in Danville when Phineas and Ferb were making a new device to communicate with Meep as he travels across the galaxy. To make a device suitable for galatic communication and secure enough to be safe from alien hackers, they decide to protect their device with QKD! Unfortunately, due to Phineas & Co singing their usual musical numbers about their inventions, Doofenshmirtz has caught wind of this technology and wants to use it to take over the Tristate area, using his brand new Qubit-Disrupt-inator. Naturally I, Major Monogram, have to send you, Perry the Platypus, on a mission to stop Doofenshmirtz from disrupting Phineas and Ferb's qubits with his diabolical inator. So grab your tiny fedora and doo-bee-doo-bee-doo-ba-doo your way over to stop Doofenshmirtz! Mission:
@@ -16,35 +16,12 @@ So it was just another day in Danville when Phineas and Ferb were making a new d
 ## Notes
 This challenge was insipired by the Google CTF 2019. We used a writeup published by scryh (`https://devel0pment.de/?p=1533`).
 
+This challenge was meant to get people interested in reading about Quantum Key Distribution as well as the BB84 protocol.
 
 ## Flag
 flag{MO0O0O0O0M PH1NE4S & F3RB R T4LK1NG 2 AL1ENS 0V3R QKD!!!}
 
 ## Solution
-Send in as many bases as you'd like, we will tell them how many are right or wrong.
-Get the bases in the right order
-Apply bases to the proper input (complex numbers)
-Get correct output of bits
-Translate to ASCII - 8 bit chunks
-GET FLAG
+The way the challenge worked is by having people guess what order are the 256 bases chosen. The bases were `x` and `+`. The way that people could do it was by iteratively guessing what were the chosen bases and making sure that the server says that there are no errors. After getting all the right bases, the server sends the bits in polar co-ordinate form. Using the bases, we convert the polar co-ordinates into `1`s and `0`s. We translate the bits into ASCII and we get the message. Sending the message to the server gives us the flag.
 
-
-How many bases to guess (give number)
-What are your guesses (send + and x in specific order)
-Match to the order of our array (send back how many are correct)
-Do as many times as they want and check any number of bases each time
-They can progressively get the right order, piece by piece
-
-set up basis once, randomly, so everyone has a unique challenge
-Randomly generate set of bases, once they get the right order, calculate the bits,
-
-Save key in one file, and the flag in the other.
-Convert key to binary, put binary through bases, convert to ASCII -> password!
-Give password to get flag!
-
-Given the binary of the flag and the arrows (conjugates), apply the bases to each arrow directly, and each resulting diagonal arrow must be corrected.
-Perform bases on given arrows, throw out resulting diagonals.
-Encoding for addition, decoding for subtraction - give hint with the bases
-Perform rotation on conjugate
-'x' - add 45 degrees
-'+' - no change
+For the entire script implementation, please check out `solution.py`.
